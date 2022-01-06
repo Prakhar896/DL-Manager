@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>DeepLens Manager</title>
+        <style>
+            body {
+                text-align: center;
+            }
+            #updateLabel {
+                visibility: hidden;
+            }
+        </style>
+        <script src="https://unpkg.com/axios/dist/axios.min.js">
+        </script>
+        <script src="/assets/indexJS"></script>
+    </head>
+    <body>
+        <h1>Welcome to the DeepLens Manager</h1>
+        <p>This server allows you to configure your AWS DeepLens in an intuitive manner. Learn more <a href="/about">here</a></p>
+        <br>
+        <p>Please enter your AWS DeepLens Password to gain access.</p>
+
+        <form>
+            <label for="pass">Enter password:</label><br>
+            <input type="password" id="passwordField" value="">
+        </form>
+        <br>
+        <button id="submitButton" onclick="checkPassword()">Access</button>
+        
+        <p id="updateLabel">Logged in! Redirecting now...</p>
+
+        <script src="/assets/copyright"></script>
+    </body>
+</html>

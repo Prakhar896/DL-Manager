@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block tabtitle %}DLM Home{% endblock %}
+{% block head %}
+<style>
+    body {
+        text-align: left;
+    }
+    #greeting {
+        text-align: center;
+    }
+</style>
+<script src="/assets/homeJS"></script>
+{% endblock %}
+
+{% block body %}
+<br>
+
+<div id="greeting">
+    <h1>Welcome to the DeepLens Manager</h1>
+    <p>DeepLens is online!</p>
+</div>
+
+<p><strong>Runtime Information:</strong></p>
+<p>Current Wifi: {{ homeRuntimeData['ssid'] }}</p>
+<p>Uptime: {{homeRuntimeData['uptime']}}</p>
+<br>
+<br>
+<a id="sshCodeLink"><p>SSH Code</p></a>
+<script>
+    document.getElementById("sshCodeLink").href = `${originURL2}/session/${authToken2}/home/extras/ssh`
+</script>
+{% endblock %}
