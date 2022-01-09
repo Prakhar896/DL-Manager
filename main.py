@@ -8,7 +8,7 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-
+ 
 safeBoot = True
 if 'safeBoot' in os.environ:
     try:
