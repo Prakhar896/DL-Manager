@@ -16,7 +16,7 @@ if 'safeBoot' in os.environ:
     except:
         print("BOOT ENCOUNTERED AN ERROR: safeBoot environment variable is not set to a valid value. Please set it to 1 or 0.")
         print("Having safeBoot env variable is optional in the .env file. Safe boot is enabled in main.py by default.")
-
+ 
 validAuthTokens = {}
 if not os.path.isfile('authTokens.txt'):
     with open('authTokens.txt', 'w') as f:
