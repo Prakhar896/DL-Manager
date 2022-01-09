@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from flask_cors import CORS
-import os, sys, json, requests, subprocess
+import os, sys, json, requests, subprocess, platform
 import datetime
 from models import *
 from dotenv import load_dotenv
@@ -95,7 +95,8 @@ def configHome(authToken):
             loggedInUser=zshCommandOutput('whoami'), 
             homeRuntimeData={
                 'ssid': ssid,
-                'uptime': zshCommandOutput('uptime')
+                'uptime': zshCommandOutput('uptime'),
+                "port": os.environ['RuntimePort']
             })
     else:
         return check
@@ -109,6 +110,17 @@ def sshCode(authToken):
     else:
         return check
 
+@app.route('/session/<authToken>/zsh')
+def zsh(authToken):
+    expireAuthTokens()
+    check = checkAuthTokenValidity(authToken, validAuthTokens)
+    if check == True:
+        return render_template('zsh.html', cwd=zshCommandOutput('pwd'), loggedInUser=zshCommandOutput('whoami'))
+    else:
+        return check
+
+from api import *
+
 from assets import *
 
 if __name__ == "__main__":
@@ -117,6 +129,6 @@ if __name__ == "__main__":
         safeBootProcess()
         print()
     try:
-        app.run(host='0.0.0.0', port=8890)
+        app.run(host='0.0.0.0', port=int(os.environ['RuntimePort']))
     except:
         print("ERROR ENCOUNTERED: Unable to start the server. Try booting in safe mode.")

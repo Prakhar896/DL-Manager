@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block tabTitle %}DLM In-Browser Zsh{% endblock %}
+
+{% block head %}
+<style>
+    body {
+        text-align: center;
+    }
+    #outputBoxContainer {
+        height: 300px;
+        overflow: auto;
+        background-color: lightgrey;
+        align-self: stretch;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<br>
+<h1>In-browser Zsh</h1>
+<p>The DLM offers an interactive way to avoid starting up an SSH session everytime you want to run a command in the DeepLens</p>
+<br>
+<h3>How It Works</h3>
+<p>Enter the text of the command in the field below and DLM will run it on the DeepLens and show you the output in the output box. (Run "pwd" to find out the current directory the DLM terminal is on.)</p>
+<br>
+<form>
+    <label for="command">Enter command:</label><br>
+    <input type="text" id="commandField" value="">
+</form>
+<br>
+<button type="button" class="btn btn-primary" onclick="runCommand()">Run Command</button>
+<br>
+<br>
+<p id="cwdLabel">ZSH Current Working Directory: {{cwd}}</p>
+<div id="outputBoxContainer">
+    <div id="outputBoxContentContainer">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p>Output will appear here!</p>
+    </div>
+</div>
+<script src="/assets/zshJS"></script>
+{% endblock %}

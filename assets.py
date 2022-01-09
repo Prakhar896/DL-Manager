@@ -16,3 +16,7 @@ def homeJS():
 @app.route('/assets/baseJS')
 def baseJS():
     return fileContent('supportFiles/base.js')
+
+@app.route('/assets/zshJS')
+def zshJS():
+    return fileContent('supportFiles/zsh.js')

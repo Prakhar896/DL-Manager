@@ -34,7 +34,7 @@ def checkAuthTokenValidity(authToken, validAuthTokens):
 
 def safeBootProcess():
     if platform.system() == "Linux" or platform.system() == "Darwin":
-        for envVariable in ['deepLensPwd', 'DLAccessCode']:
+        for envVariable in ['deepLensPwd', 'DLAccessCode', 'RuntimePort']:
             if envVariable not in os.environ:
                 print("SAFE BOOT ENCOUNTERED AN ERROR: {} environment variable is not set".format(envVariable))
                 sys.exit(1)
