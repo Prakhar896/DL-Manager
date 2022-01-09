@@ -22,12 +22,12 @@ function runCommand() {
                 alert(response.data)
                 const outputBoxContentContainer = document.getElementById("outputBoxContentContainer")
                 outputBoxContentContainer.innerHTML = ""
-                outputBoxContentContainer.innerHTML = response.data.slice("WARNING: ".length)
+                outputBoxContentContainer.innerHTML = "<p style=\"white-space: pre-line\">" + response.data.slice("WARNING: ".length) + "</p>"
                 refreshCwd()
             } else {
                 const outputBoxContentContainer = document.getElementById("outputBoxContentContainer")
                 outputBoxContentContainer.innerHTML = ""
-                outputBoxContentContainer.innerHTML = response.data
+                outputBoxContentContainer.innerHTML = "<p style=\"white-space: pre-line\">" + response.data + "</p>"
                 refreshCwd()
             }
         } else {
