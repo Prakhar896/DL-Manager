@@ -100,6 +100,14 @@ To see the ideal output for making an editing a .env file, [watch this short cli
 
 If all goes well, you can now access the DeepLens without using SSH using the DL Manager by simply opening up a browser on any computer thats on the same WiFi as the DeepLens and entering the URL: `http://<YOUR DEEPLENS IP ADDRESS>:<RUNTIME PORT>`, for e.g `http://192.168.84.74:8890/`
 
+### SSH Code feature
+
+The DLM automatically generates a file called `sshCode.md` under the folder `supportFiles` which is under the root DLM folder. This file is helpful for the user, as it serves to be a quick manner of copying-and-pasting SSH code into your terminal to get access to the DeepLens.
+
+When the server first runs, the DLM sets this to a template which you can update yourself by editing the `sshCode.md` file with the correct DeepLens IP address and the DeepLens `aws_cam` account password.
+
+This change will be reflected in the web server when you click on the `SSH Code` link in the homepage of the DLM (which comes up after you login to the system.)
+
 ## Running DL Manager 24/7
 
 This section assumes that you have the latest version of the [Node Package Manager (npm) installed.](https://npmjs.com)
