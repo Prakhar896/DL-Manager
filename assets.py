@@ -20,3 +20,7 @@ def baseJS():
 @app.route('/assets/zshJS')
 def zshJS():
     return fileContent('supportFiles/zsh.js')
+
+@app.route('/assets/logoutJS')
+def logoutJS():
+    return fileContent('supportFiles/logout.js')
