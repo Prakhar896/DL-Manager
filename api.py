@@ -64,5 +64,5 @@ def fetchCWD():
             return "ERROR: {} header is not set.".format(reqHeader), 400
     if request.headers['DLAccessCode'] != os.environ['DLAccessCode']:
         return "ERROR: Access code is incorrect.", 401
-
+    
     return zshCommandOutput("pwd"), 200
