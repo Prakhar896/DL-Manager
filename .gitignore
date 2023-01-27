@@ -4,3 +4,5 @@ dlVirt/
 .env
 supportFiles/sshCode.md
 authTokens.txt
+virt/
+licensekey.txt

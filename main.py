@@ -3,6 +3,7 @@ from flask_cors import CORS
 import os, sys, json, requests, subprocess, platform
 import datetime
 from models import *
+from activation import *
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -80,6 +81,44 @@ from api import *
 from assets import *
 
 if __name__ == "__main__":
+    # Check activation
+    activationCheck = checkForActivation()
+    if activationCheck == True:
+        print("DL Manager is activated!")
+    elif activationCheck == False:
+        print("MAIN: This copy of DeepLens Manager is not activated! Triggering copy activation now...")
+        print()
+        version = None
+        if not os.path.isfile(os.path.join(os.getcwd(), 'version.txt')):
+            print("MAIN: Could not find version.txt file.")
+            version = input("Please enter the version of DeepLens Manager that you are using: ")
+            print()
+        else:
+            version = open('version.txt', 'r').read()
+        try:
+            initActivation("ejoap9y0", version)
+        except Exception as e:
+            print("MAIN: Failed to activate this copy of DLM. Error: {}".format(e))
+            print("Aborting boot...")
+            sys.exit(1)
+    else:
+        print("MAIN: This copy's license key needs to be re-verified. Triggering license key verification request...")
+        print()
+        version = None
+        if not os.path.isfile(os.path.join(os.getcwd(), 'version.txt')):
+            print("MAIN: Could not find version.txt file.")
+            version = input("Please enter the version of DeepLens Manager that you are using: ")
+            print()
+        else:
+            version = open('version.txt', 'r').read()
+        try:
+            makeKVR("ejoap9y0", version)
+        except Exception as e:
+            print("MAIN: Failed to verify this copy's license key. Error: {}".format(e))
+            print("Aborting boot...")
+            sys.exit(1)
+
+
     if safeBoot:
         print("Safe booting...")
         safeBootProcess()
