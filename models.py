@@ -34,7 +34,7 @@ def checkAuthTokenValidity(authToken, validAuthTokens):
 
 def safeBootProcess():
     if platform.system() == "Linux" or platform.system() == "Darwin":
-        for envVariable in ['deepLensPwd', 'DLAccessCode', 'RuntimePort']:
+        for envVariable in ['deepLensPwd', 'DLAccessCode', 'RuntimePort', 'LoggingEnabled', 'DebugMode']:
             if envVariable not in os.environ:
                 print("SAFE BOOT ENCOUNTERED AN ERROR: {} environment variable is not set".format(envVariable))
                 sys.exit(1)
@@ -44,7 +44,7 @@ def safeBootProcess():
             print("Python version is too old. Please install Python 3.8 or higher.")
             sys.exit(1)
 
-        for file in ['about.md', 'main.py', 'copyright.js', 'index.html', 'mdConverter.py', 'requirements.txt']:
+        for file in ['about.md', 'main.py', 'api.py', 'dlmAdmin.py', 'session.py', 'assets.py', 'activation.py', 'copyright.js', 'index.html', 'mdConverter.py', 'requirements.txt']:
             if not os.path.exists(file):
                 print("SAFE BOOT ENCOUNTERED AN ERROR: Required file `{}` not found.".format(file))
                 sys.exit(1)
