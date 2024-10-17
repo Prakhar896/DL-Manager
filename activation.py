@@ -1,4 +1,6 @@
 import os, sys, shutil, subprocess, requests, datetime, random, time, platform, getpass
+from dotenv import load_dotenv
+load_dotenv()
 
 # Get Activation server link (make GET request to static page)
 activationServerLink = None
@@ -133,6 +135,10 @@ def makeKVR(productID, copyVersion):
         sys.exit(1)
 
 def initActivation(productID, copyVersion):
+    if "IgnoreActivation" in os.environ and os.environ["IgnoreActivation"] == "True":
+        print("ACTIVATION: Ignoring activation as per enforced bypass.")
+        return
+    
     getActivatorServerLink()
     # Scan libraries to ensure getmac is installed
     try:
