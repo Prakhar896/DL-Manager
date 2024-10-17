@@ -1,0 +1,16 @@
+{
+    "scripts": {
+        "run": [
+            "pm2 start ./virt/bin/python --name DLManager -- main.py"
+        ],
+        "stop": [
+            "pm2 stop DLManager"
+        ],
+        "logs": [
+            "pm2 logs DLManager --lines 100"
+        ],
+        "nanoLogs": [
+            "nano logs.txt"
+        ]
+    }
+}
