@@ -51,13 +51,9 @@ def expireAuthTokens():
 def beforeRequest():
     # If a non-API request is being made, force-reset the working directory to the boot directory
     if not request.path.startswith("/api"):
-        print("Non-API request.")
         if os.getcwd() != bootDirectory:
-            print("Forcing working directory to boot directory...")
             Logger.log("OSCHDIR: Forcing working directory to boot directory to maintain system integrity...")
             os.chdir(bootDirectory)
-        else:
-            print("Working directory is already set to boot directory.")
 
 @app.route('/')
 def index():
