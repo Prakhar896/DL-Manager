@@ -80,3 +80,11 @@ window.addEventListener('beforeunload', async function (e) {
     e.preventDefault()
     e.returnValue = '';
 })
+
+// Add enter key listener on commandField input
+document.getElementById("commandField").addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        runCommand()
+    }
+})

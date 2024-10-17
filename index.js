@@ -45,9 +45,9 @@ function checkPassword() {
         }
     })
     .catch(error => {
-        if (error == "Error: Request failed with status code 401") {
+        if (error.response.status == 401) {
             console.log("Unauthorised Response Error Occurred when checking password: " + error)
-            alert("Incorrect Password. Access Denied. You are barred from access into the server due to failed authentication. Please try again.")
+            alert("Incorrect Password. Access Denied. Please try again.")
             return
         }
         alert("Error in connecting to server. Check logs for more information.")
@@ -55,3 +55,10 @@ function checkPassword() {
         document.getElementById('updateLabel').style.visibility = "hidden"
     })
 }
+
+document.getElementById("passwordField").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        checkPassword()
+    }
+})

@@ -6,22 +6,22 @@ def configHome(authToken):
     check = checkAuthTokenValidity(authToken, validAuthTokens)
     if check == True:
         ## Generate required information
-        ssid = ""
-        if platform.system() == "Darwin":
-            ## Get current SSID
-            ssid = subprocess.check_output(['/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport', '-I'])
-            ssid = ssid.decode('utf-8').split('\n')[12]
-            ssid = ssid[len('           SSID: ')::]
-        elif platform.system() == "Linux":
-            ## Get current SSID
-            ssid = subprocess.check_output(['iwgetid', '-r'])
-            ssid = ssid.decode('utf-8').split('\n')[0]
+        # ssid = ""
+        # if platform.system() == "Darwin":
+        #     ## Get current SSID
+        #     ssid = subprocess.check_output(['/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport', '-I'])
+        #     ssid = ssid.decode('utf-8').split('\n')[12]
+        #     ssid = ssid[len('           SSID: ')::]
+        # elif platform.system() == "Linux":
+        #     ## Get current SSID
+        #     ssid = subprocess.check_output(['iwgetid', '-r'])
+        #     ssid = ssid.decode('utf-8').split('\n')[0]
         
         return render_template(
             'home.html', 
             loggedInUser=zshCommandOutput('whoami'), 
             homeRuntimeData={
-                'ssid': ssid,
+                # 'ssid': ssid,
                 'uptime': zshCommandOutput('uptime'),
                 "port": os.environ['RuntimePort']
             })
@@ -55,6 +55,12 @@ def logout(authToken):
             if validAuthTokens[tokenKey] == authToken:
                 del validAuthTokens[tokenKey]
                 json.dump(validAuthTokens, open('authTokens.txt', 'w'))
+                
+                if os.getcwd() != bootDirectory:
+                    print("SESSIONLOGOUT: Forcing working directory to boot directory...")
+                    Logger.log("OSCHDIR: Forcing working directory to boot directory to maintain system integrity...")
+                    os.chdir(bootDirectory)
+                
                 return render_template('logout.html', currentUser=zshCommandOutput('whoami'))
     else:
         return check

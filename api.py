@@ -12,13 +12,17 @@ def zshCommand():
         return "ERROR: Content-Type is not set to application/json.", 400
     if 'command' not in request.json:
         return "ERROR: `command` field is not present in request JSON body.", 400
-    if request.json['command'] == "":
+    if not isinstance(request.json["command"], str):
+        return "ERROR: `command` field in request JSON body is not a string.", 400
+    
+    command: str = request.json["command"].strip()
+    
+    if command == "":
         return "ERROR: `command` field in request JSON body is empty.", 400
     
-    print("Running command: {}".format(request.json['command']))
-    
-    if request.json['command'].startswith("cd"):
-        if request.json['command'] == "cd":
+    if command.startswith("cd"):
+        Logger.log("ZSHCOMMAND CD: {}".format(command))
+        if command == "cd":
             currentUser = zshCommandOutput('echo $USER')
             currentUser = currentUser[:len(currentUser)-1]
 
@@ -44,13 +48,14 @@ def zshCommand():
         else:
 
             try:
-                os.chdir(request.json['command'].split(" ")[1])
+                os.chdir(command.split(" ")[1])
             except FileNotFoundError as not_found:
                 return "ERROR: {}!".format(not_found), 200
 
-            return "Changed directory to {}".format(request.json['command'].split(" ")[1]), 200
+            return "Changed directory to {}".format(command.split(" ")[1]), 200
 
-    output = zshCommandOutput(request.json['command'])
+    Logger.log("ZSHCOMMAND: {}".format(command))
+    output = zshCommandOutput(command)
 
     if output == "":
         return "WARNING: EMPTY COMMAND OUTPUT", 200

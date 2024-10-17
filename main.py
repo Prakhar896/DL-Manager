@@ -17,7 +17,9 @@ if 'safeBoot' in os.environ:
     except:
         print("BOOT ENCOUNTERED AN ERROR: safeBoot environment variable is not set to a valid value. Please set it to 1 or 0.")
         print("Having safeBoot env variable is optional in the .env file. Safe boot is enabled in main.py by default.")
- 
+
+bootDirectory = os.getcwd()
+
 validAuthTokens = {}
 if not os.path.isfile('authTokens.txt'):
     with open('authTokens.txt', 'w') as f:
@@ -44,6 +46,18 @@ def expireAuthTokens():
         if (datetime.datetime.now() - timeCreatedDateObj).total_seconds() > 86400:
             del validAuthTokens[timeCreated]
             json.dump(validAuthTokens, open('authTokens.txt', 'w'))
+            
+@app.before_request
+def beforeRequest():
+    # If a non-API request is being made, force-reset the working directory to the boot directory
+    if not request.path.startswith("/api"):
+        print("Non-API request.")
+        if os.getcwd() != bootDirectory:
+            print("Forcing working directory to boot directory...")
+            Logger.log("OSCHDIR: Forcing working directory to boot directory to maintain system integrity...")
+            os.chdir(bootDirectory)
+        else:
+            print("Working directory is already set to boot directory.")
 
 @app.route('/')
 def index():
